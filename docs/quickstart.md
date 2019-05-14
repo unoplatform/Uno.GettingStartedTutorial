@@ -5,14 +5,13 @@ description: How to get started developing Cross Platform apps with Uno
 
 # Create a Single Page App with Uno
 
-[Download Sample](https://github.com/nventive/Uno.QuickStarts)
+[Download Sample](https://github.com/nventive/Uno.QuickStart)
 
 In this quickstart you will learn how to:
 
 - Add the Uno Project Templates to Visual Studio
 - Create a new Project with Uno
 - Learn basics on Model Binding
-- Create a stylish UI with the Windows Community Toolkit
 
 The quickstart walks through creating cross platform application with Uno, which enables you to see a single Issue entry.
 
@@ -23,6 +22,16 @@ The quickstart walks through creating cross platform application with Uno, which
 - (optional) A paired Mac to build the iOS project.
 
 For more information about these prerequisites, see [Installing Xamarin](https://docs.microsoft.com/en-us/xamarin/get-started/installation/index.md). For information about connecting Visual Studio 2019 to a Mac build host, see [Pair to Mac for Xamarin.iOS development](https://docs.microsoft.com/en-us/xamarin/ios/get-started/installation/windows/connecting-to-mac/index.md).
+
+##### On Windows
+
+- Running WASM Project using Python
+  - The Linux Subsystem to run the native Python tools
+  - Or the Python tools for windows
+- Running WASM Project using Node
+  - Node tools (https://nodejs.org/en/)
+  - http-server package (https://www.npmjs.com/package/http-server)
+    - `npm install npm install http-server -g`
 
 ## Installing the App Templates with Visual Studio 2019
 
@@ -55,7 +64,6 @@ For more information about these prerequisites, see [Installing Xamarin](https:/
 
     - Click on the Updates tab, and update any of the packages that may need to update.
     - Click back on the Browse tab and install the following NuGet Packages to each of the projects in your solution:
-      - Uno.Microsoft.Toolkit.Uwp.UI.Controls
       - Refactored.MvvmHelpers
 
 ### Setting Up Our Model
@@ -156,7 +164,24 @@ For more information about these prerequisites, see [Installing Xamarin](https:/
 
 ### Setting up our Page
 
-1. Let's start by opening the code behind and adding some base properties to bind to in our XAML. In the **Solution Explorer**, double-click **MainPage.xaml.cs** to open, then add the following code.
+1. To start let's create a simple converter that will format a value to a string. Create a Converters folder, then create a new class `StringFormatConverter`
+
+    ```cs
+    public class StringFormatConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return string.Format(parameter.ToString(), value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    ```
+
+1. Next, we will add some base properties to bind to in our XAML. In the **Solution Explorer**, double-click **MainPage.xaml.cs** to open, then add the following code.
 
     ```cs
     public sealed partial class MainPage : Page
@@ -228,14 +253,17 @@ For more information about these prerequisites, see [Installing Xamarin](https:/
     <Page x:Class="BugTracker.MainPage"
           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-          xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-          xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+          xmlns:converters="using:BugTracker.Converters"
           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-          mc:Ignorable="d">
+          xmlns:ios="http://nventive.com/ios"
+          mc:Ignorable="d ios">
     ```
 
-1. Now we will add the `StringFormatConverter` from the Windows Community Toolkit to our Page Resources as shown below:
+    > [!IMPORTANT]
+    > We can bring in Platform Specific namespaces like shown above to specifically set properties for a specific Platform.
+
+1. Now we will add the `StringFormatConverter` we created earlier to our Page Resources as shown below:
 
     ```xml
     <Page.Resources>
@@ -267,7 +295,7 @@ For more information about these prerequisites, see [Installing Xamarin](https:/
       <TextBlock Text="{x:Bind Item.Id}" Margin="6,0" VerticalAlignment="Center" />
       <ComboBox x:Name="IssueTypeBox"
                 ItemsSource="{x:Bind IssueTypeList}"
-                SelectedItem="{x:Bind Item.Type}"
+                SelectedItem="{x:Bind Item.Type,Mode=TwoWay}"
                 SelectionChanged="IssueType_SelectionChanged"
                 PlaceholderText="Enter the Issue Type"
                 HorizontalAlignment="Stretch"
@@ -278,107 +306,69 @@ For more information about these prerequisites, see [Installing Xamarin](https:/
     > [!IMPORTANT]
     > Take note that we have added a reference to an event handler on the ComboBox. We will add this later in the code behind.
 
-1. Now after the StackPanel we added in the last step, we will add a TabView from the Community Toolkit. In here we will have a Markdown editor with a toolbar on the first tab, and a preview of the Markdown on the second tab.
+1. Now after the StackPanel we added in the last step, we will add an area that we can edit the multi-line description of the Issue.
 
     ```xml
-    <controls:HeaderedTextBlock Text="Description" Grid.Row="1" Margin="10,0" />
-    <controls:TabView x:Name="DescriptionTabs"
-                      Grid.Row="2"
-                      Margin="10,0"
-                      SelectedTabWidth="150"
-                      TabWidthBehavior="Equal">
-      <controls:TabViewItem Header="Edit">
-        <StackPanel>
-          <controls:TextToolbar Editor="{x:Bind Editor}" Format="MarkDown"/>
-          <RichEditBox x:Name="Editor"
-                       PlaceholderText="Enter Text Here"
-                       TextChanged="Editor_TextChanged"
-                       Height="200" />
-        </StackPanel>
-      </controls:TabViewItem>
-      <controls:TabViewItem Header="Preview" Padding="10">
-        <controls:MarkdownTextBlock Text="{x:Bind Item.Description}"
-                                    Margin="6" />
-      </controls:TabViewItem>
-    </controls:TabView>
+    <TextBox Text="{x:Bind Item.Description,Mode=TwoWay}"
+             Grid.Row="2"
+             AcceptsReturn="True"
+             Header="Description"
+             Height="200"
+             Margin="10,0"
+             PlaceholderText="Enter Text Here" />
     ```
 
-    > [!IMPORTANT]
-    > Take note that we have added a reference to an event handler on the RichEditBox. We will add this later in the code behind.
-
-1. Finally we will add the last section to our layout. In here we will have an ability to visualize the Effort of the Issue and see when an issue was created, started, and completed.
+1. Finally we will add the last section to our layout to handle planning. Here will will show the estimated Effort it will take to resolve the issue, what the current status is, and when the Issue was Started and Completed.
 
     ```xml
-    <controls:HeaderedTextBlock Text="Planning" Grid.Row="3" Margin="10,0" />
-    <controls:WrapPanel Grid.Row="4" Margin="10,0" HorizontalSpacing="20">
+    <TextBlock Text="Planning" FontWeight="Bold" FontSize="16" Grid.Row="3" Margin="10,0" />
+
+    <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="10,0" Spacing="20">
       <StackPanel Background="LightGray" Padding="20">
-        <controls:HeaderedTextBlock Text="Effort" />
-        <controls:RadialGauge x:Name="EffortGauge"
-                              Value="{x:Bind Item.Effort,Mode=OneWay}"
-                              Minimum="0"
-                              Maximum="15"
-                              Unit="Story Points"
-                              TickSpacing="2"
-                              TickLength="0"
-                              ScaleWidth="26"
-                              TrailBrush="Green"
-                              NeedleWidth="2"
-                              NeedleBrush="Black"
-                              NeedleLength="85"
-                              MaxWidth="150"/>
-          <StackPanel Orientation="Horizontal">
-            <TextBox Text="{x:Bind Item.Effort,Mode=TwoWay}"
-                     HorizontalTextAlignment="Center"
-                     HorizontalAlignment="Center"
-                     HorizontalContentAlignment="Center"
-                     BorderBrush="Transparent"
-                     Background="Transparent"/>
-            <Slider Value="{x:Bind Item.Effort,Mode=TwoWay}" ValueChanged="Slider_ValueChanged" Width="100" Minimum="0" Maximum="15" />
-          </StackPanel>
-        </StackPanel>
-        <StackPanel Background="LightGray"
-                    Padding="20">
-          <controls:HeaderedTextBlock Text="Status" />
-          <ComboBox ItemsSource="{x:Bind StatusList}"
-                    SelectedItem="{x:Bind Item.Status}"
-                    HorizontalAlignment="Stretch"
-                    SelectionChanged="StatusPicker_SelectionChanged" />
-          <TextBlock Text="{x:Bind Item.StartedAt,Converter={StaticResource StringFormatConverter},ConverterParameter='Started: {0:MMM dd, yyyy hh:mm tt}',Mode=OneWay}" />
-          <TextBlock Text="{x:Bind Item.CompletedAt,Converter={StaticResource StringFormatConverter},ConverterParameter='Completed: {0:MMM dd, yyyy hh:mm tt}',Mode=OneWay}" />
-        </StackPanel>
-      </controls:WrapPanel>
-      <TextBlock Text="{x:Bind Item.CreatedAt, Converter={StaticResource StringFormatConverter}, ConverterParameter='Created: {0:MMM dd, yyyy hh:mm tt}'}" Grid.Row="5"
+        <TextBlock Text="Effort" FontWeight="Bold" FontSize="16" Margin="10,0" />
+        <TextBox Text="{x:Bind Item.Effort,Mode=TwoWay}"
+                   HorizontalTextAlignment="Center"
+                   HorizontalAlignment="Center"
+                   HorizontalContentAlignment="Center"
+                   BorderBrush="Transparent"
+                   Background="Transparent"/>
+        <Slider Value="{x:Bind Item.Effort,Mode=TwoWay}" Width="100" Minimum="0" Maximum="15" />
+      </StackPanel>
+      <StackPanel Background="LightGray"
+                  Padding="20">
+        <TextBlock Text="Status" FontWeight="Bold" FontSize="16" Margin="10,0" />
+        <ComboBox ItemsSource="{x:Bind StatusList}"
+                  SelectedItem="{x:Bind Item.Status}"
+                  HorizontalAlignment="Stretch"
+                  SelectionChanged="StatusPicker_SelectionChanged" />
+        <TextBlock Text="{x:Bind Item.StartedAt,Converter={StaticResource StringFormatConverter},ConverterParameter='Started: {0:MMM dd, yyyy hh:mm tt}',Mode=OneWay}" />
+        <TextBlock Text="{x:Bind Item.CompletedAt,Converter={StaticResource StringFormatConverter},ConverterParameter='Completed: {0:MMM dd, yyyy hh:mm tt}',Mode=OneWay}" />
+      </StackPanel>
+    </StackPanel>
+
+    <TextBlock Text="{x:Bind Item.CreatedAt, Converter={StaticResource StringFormatConverter}, ConverterParameter='Created: {0:MMM dd, yyyy hh:mm tt}'}" Grid.Row="5"
                Margin="10,0"/>
-    </Grid>
     ```
 
     > [!IMPORTANT]
-    > Take note that we have added a reference to an event handler on the Slider and a ComboBox. We will add this in the next step in the code behind.
+    > Take note that we have added a reference to an event handler on the ComboBox. We will add this in the next step in the code behind.
 
 1. Now that our Page is complete we can go back and add the event handlers in our code behind. This will allow us to handle changes and make necessary updates. In the **Solution Explorer**, double-click **MainPage.xaml.cs** to open, then add the following code.
 
     ```cs
-    // Update the IssueItem's Description when the Editor's text value changes
-    private void Editor_TextChanged(object sender, RoutedEventArgs e)
-    {
-        if(Item != null)
-        {
-            Editor.Document.GetText(Windows.UI.Text.TextGetOptions.UseLf, out var description);
-            Item.Description = description;
-        }
-    }
-
-    // Make sure that we add a timestamp when an Issue is changed to WIP, Done or Removed
+    // Sets the time when we Complete or Start an issue.
     private void StatusPicker_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
-        switch(Item.Status)
+        switch (Item.Status)
         {
             case IssueStatus.Removed:
             case IssueStatus.Done:
-                Item.CompletedAt = DateTimeOffset.Now.ToLocalTime();
+                if(Item.CompletedAt is null)
+                    Item.CompletedAt = DateTimeOffset.Now.ToLocalTime();
                 break;
             case IssueStatus.WIP:
-                Item.StartedAt = DateTimeOffset.Now.ToLocalTime();
+                if(Item.StartedAt is null)
+                    Item.StartedAt = DateTimeOffset.Now.ToLocalTime();
                 break;
             default:
                 Item.StartedAt = null;
@@ -387,47 +377,24 @@ For more information about these prerequisites, see [Installing Xamarin](https:/
         }
     }
 
-    // Provide a unique color to visually indicate what type of issue we are looking at
+    // Provides a unique color based on the type of Issue
     private void IssueType_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
-        var color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00);
-        switch(IssueTypeBox.SelectedItem)
+        var color = Colors.Red;
+        switch (IssueTypeBox.SelectedItem)
         {
             case IssueType.Feature:
-                color = Color.FromArgb(0xFF, 0x00, 0xFF, 0x00);
+                color = Colors.Green;
                 break;
             case IssueType.Issue:
-                color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF);
+                color = Colors.Blue;
                 break;
             case IssueType.Task:
-                color = Color.FromArgb(0xFF, 0xFF, 0xFF, 0x00);
+                color = Colors.Yellow;
                 break;
         }
         IssueTypeIndicator.Background = new SolidColorBrush(color);
     }
-
-    // Change the color of the RadialGauge depending on the effort
-    private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs args)
-    {
-        var color = Color.FromArgb(0xFF, 0x00, 0xFF, 0x00);
-        if(args.NewValue > 4 & args.NewValue <= 10)
-        {
-            color = Color.FromArgb(0xFF, 0xFF, 0xFF, 0x00);
-        }
-        else if(args.NewValue > 10)
-        {
-            color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00);
-        }
-
-        EffortGauge.TrailBrush = new SolidColorBrush(color);
-    }
-    ```
-
-    As one final change be sure to add the following line in the `OnNavigatedTo` method that we created earlier. This will let us set the text in the `RichEditBox` with the Description from our `IssueItem`
-
-    ```cs
-    // Initialize the Editor after we have set the Issue Item
-    Editor.Document.SetText(Windows.UI.Text.TextSetOptions.None, Item.Description);
     ```
 
 1. Build and run the project on each platform.
@@ -441,7 +408,6 @@ In this quickstart, you have learned how to:
 - Add the Uno Project Templates to Visual Studio
 - Create a new Project with Uno
 - Learn basics on Model Binding
-- Create a stylish UI with the Windows Community Toolkit
 
 To see how we can create a list of pages, navigate between them passing parameters, and store our issues continue to the next quickstart.
 
