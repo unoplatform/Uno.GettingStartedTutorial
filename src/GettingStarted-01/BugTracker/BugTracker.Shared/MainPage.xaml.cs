@@ -118,6 +118,7 @@ We would like to have a visual indicator for the type of issue as well as someth
             IssueTypeIndicator.Background = new SolidColorBrush(color);
         }
 
-
+        public string FormatDate(string header, DateTimeOffset? dateTime) 
+            => $"{header} {dateTime:MMM dd, yyyy hh:mm tt}";
     }
 }
