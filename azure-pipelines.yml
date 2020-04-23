@@ -11,6 +11,25 @@ jobs:
     vmImage: 'windows-2019'
 
   steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'runtime'
+      version: '2.2.0'
+
+  - task: nventiveCanaryUpdater@5
+    condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries')
+    inputs:
+      solution: src/GettingStarted-01/BugTracker.sln
+      usePrivateFeed: false
+      useNuGetOrg: true
+      mergeBranch: true
+      branchToMerge: 'master'
+      nugetUpdaterVersion: '2.0.11'
+      allowDowngrade: true
+      packageAuthor: 'nventive'
+      summaryFile: '$(Build.ArtifactStagingDirectory)/Canary.md'
+      resultFile: '$(Build.ArtifactStagingDirectory)/update_result.json'
+
   - task: GitVersion@5
     inputs:
       useConfigFile: true
