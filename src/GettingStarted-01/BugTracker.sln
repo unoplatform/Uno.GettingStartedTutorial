@@ -15,6 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.Wasm", "BugTrack
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		BugTracker\BugTracker.Shared\BugTracker.Shared.projitems*{2aa278c5-4b03-44cc-895a-9425a1403d67}*SharedItemsImports = 5
 		BugTracker\BugTracker.Shared\BugTracker.Shared.projitems*{2b65e186-b9e6-4cef-9ae6-478c6de59bc4}*SharedItemsImports = 4
 		BugTracker\BugTracker.Shared\BugTracker.Shared.projitems*{4dd41938-5153-47aa-8ec8-9162f4ca0913}*SharedItemsImports = 4
 		BugTracker\BugTracker.Shared\BugTracker.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
