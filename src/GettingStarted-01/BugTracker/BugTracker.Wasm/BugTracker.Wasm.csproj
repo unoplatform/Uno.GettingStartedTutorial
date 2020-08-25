@@ -13,7 +13,6 @@
 	</PropertyGroup>
   <ItemGroup>
     <Content Include="..\BugTracker.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
-    <Content Include="Fonts\winjs-symbols.woff2" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="WasmCSS\Fonts.css" />

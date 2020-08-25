@@ -78,7 +78,7 @@
     <Compile Include="Main.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\winjs-symbols.ttf" />
+    <AndroidAsset Include="Assets\Fonts\uno-fluentui-assets.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -94,6 +94,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\BugTracker.Shared\BugTracker.Shared.projitems" Label="Shared" Condition="Exists('..\BugTracker.Shared\BugTracker.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- This will force the generation of the APK when not buildig inside visual studio -->
