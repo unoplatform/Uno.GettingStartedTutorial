@@ -19,7 +19,7 @@ jobs:
   - task: nventiveCanaryUpdater@5
     condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries')
     inputs:
-      solution: src/GettingStarted-01/BugTracker.sln
+      solution: src\**\*.sln
       usePrivateFeed: false
       useNuGetOrg: true
       mergeBranch: true
@@ -37,7 +37,7 @@ jobs:
 
   - task: MSBuild@1
     inputs:
-      solution: src/GettingStarted-01/BugTracker.sln
+      solution: src\**\*.sln
       msbuildLocationMethod: version
       msbuildVersion: latest
       msbuildArchitecture: x86
