@@ -19,12 +19,12 @@ jobs:
   - task: nventiveCanaryUpdater@5
     condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries')
     inputs:
-      solution: src\**\*.sln
+      solution: src
       usePrivateFeed: false
       useNuGetOrg: true
       mergeBranch: true
       branchToMerge: 'master'
-      nugetUpdaterVersion: '2.0.11'
+      nugetUpdaterVersion: '2.1.1'
       allowDowngrade: true
       packageAuthor: 'nventive'
       summaryFile: '$(Build.ArtifactStagingDirectory)/Canary.md'
