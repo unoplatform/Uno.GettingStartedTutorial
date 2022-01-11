@@ -8,6 +8,13 @@ jobs:
     vmImage: 'windows-2022'
 
   steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core SDK 2.2.x'
+    retryCountOnTaskFailure: 3
+    inputs:
+      packageType: sdk
+      version: 2.2.x
+
   - task: nventiveCanaryUpdater@5
     condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries')
     inputs:
