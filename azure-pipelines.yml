@@ -35,7 +35,7 @@ jobs:
       branchToMerge: 'master'
       nugetUpdaterVersion: '2.3.0-alpha.35'
       allowDowngrade: true
-      packageAuthor: 'nventive,unoplatform'
+      packageAuthor: 'nventive,uno platform'
       summaryFile: '$(Build.ArtifactStagingDirectory)/Canary.md'
       resultFile: '$(Build.ArtifactStagingDirectory)/update_result.json'
 
