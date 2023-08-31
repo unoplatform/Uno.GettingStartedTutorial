@@ -41,7 +41,7 @@ jobs:
       msbuildLocationMethod: version
       msbuildVersion: latest
       msbuildArchitecture: x86
-      msbuildArguments: /r /vm /p:Configuration=Release /p:AotAssemblies=false /ds /bl:$(build.artifactstagingdirectory)/msbuild.binlog
+      msbuildArguments: /r /v:m /p:Configuration=Release /p:AotAssemblies=false /ds /bl:$(build.artifactstagingdirectory)/msbuild.binlog
       clean: false
       maximumCpuCount: true
       restoreNugetPackages: false
