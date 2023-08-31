@@ -1,30 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<OutputType Condition="'$(Configuration)'=='Release'">WinExe</OutputType>
 		<OutputType Condition="'$(Configuration)'=='Debug'">Exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 	</PropertyGroup>
-
-	<ItemGroup Condition="exists('..\BugTracker.UWP')">
-		<EmbeddedResource Include="..\BugTracker.UWP\Package.appxmanifest" LogicalName="Package.appxmanifest" />
-		<Content Include="Assets\Fonts\uno-fluentui-assets.ttf" />
+	<ItemGroup>
+		<EmbeddedResource Include="Package.appxmanifest" />
+		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<UpToDateCheckInput Include="..\BugTracker.Shared\**\*.xaml" />
+		<PackageReference Include="Uno.WinUI.Skia.Gtk" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" />
+		<PackageReference Include="SkiaSharp.Views.Uno.WinUI" />
+		<PackageReference Include="SkiaSharp.Skottie" />
+		<PackageReference Include="Uno.WinUI.RemoteControl" Condition="'$(Configuration)'=='Debug'" />
+		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" />
 	</ItemGroup>
-
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
-		<PackageReference Include="Uno.UI" Version="4.6.18" />
-		<PackageReference Include="Uno.UI.Skia.Gtk" Version="4.6.18" />
-    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.6.18" />
-    <PackageReference Include="Uno.UI.RemoteControl" Version="4.6.18" Condition="'$(Configuration)'=='Debug'" />
-    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
-  </ItemGroup>
-
-	<Import Project="..\BugTracker.Shared\BugTracker.Shared.projitems" Label="Shared" />
-
+		<ProjectReference Include="..\BugTracker\BugTracker.csproj" />
+	</ItemGroup>
+	<Import Project="..\BugTracker.Base\base.props" />
 </Project>
