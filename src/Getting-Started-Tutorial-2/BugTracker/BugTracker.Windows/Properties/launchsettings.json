@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"BugTracker.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"BugTracker.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}

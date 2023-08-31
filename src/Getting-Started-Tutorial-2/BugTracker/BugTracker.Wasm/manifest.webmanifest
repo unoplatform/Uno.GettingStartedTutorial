@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "BugTracker",
+  "display": "standalone",
+  "name": "BugTracker",
+  "short_name": "BugTracker",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

@@ -1,0 +1,70 @@
+<Page x:Class="BugTracker.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="using:BugTracker.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ios="http://nventive.com/ios"        
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d ios">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray" Padding="5">
+			<Canvas Background="Blue" Width="10" x:Name="IssueTypeIndicator" />
+			<TextBlock Text="{x:Bind Item.Id}" Margin="6,0" VerticalAlignment="Center" />
+			<ComboBox x:Name="IssueTypeBox"
+            ItemsSource="{x:Bind IssueTypeList}"
+            SelectedItem="{x:Bind Item.Type,Mode=TwoWay}"
+            SelectionChanged="IssueType_SelectionChanged"
+            PlaceholderText="Enter the Issue Type"
+            HorizontalAlignment="Stretch"
+            Margin="10,0,0,0"/>
+		</StackPanel>
+
+		<TextBox Text="{x:Bind Item.Description,Mode=TwoWay}"
+         Grid.Row="2"
+         AcceptsReturn="True"
+         Header="Description"
+         Height="200"
+         Margin="10,0"
+         PlaceholderText="Enter Text Here" />
+
+		<TextBlock Text="Planning" FontWeight="Bold" FontSize="16" Grid.Row="3" Margin="10,0" />
+
+		<StackPanel Orientation="Horizontal" Grid.Row="4" Margin="10,0" Spacing="20">
+			<StackPanel Background="LightGray" Padding="20">
+				<TextBlock Text="Effort" FontWeight="Bold" FontSize="16" Margin="10,0" />
+				<TextBox Text="{x:Bind Item.Effort,Mode=TwoWay}"
+               HorizontalTextAlignment="Center"
+               HorizontalAlignment="Center"
+               HorizontalContentAlignment="Center"
+               BorderBrush="Transparent"
+               Background="Transparent"/>
+				<Slider Value="{x:Bind Item.Effort,Mode=TwoWay}" Width="100" Minimum="0" Maximum="15" />
+			</StackPanel>
+			<StackPanel Background="LightGray"
+              Padding="20">
+				<TextBlock Text="Status" FontWeight="Bold" FontSize="16" Margin="10,0" />
+				<ComboBox ItemsSource="{x:Bind StatusList}"
+              SelectedItem="{x:Bind Item.Status, Mode=TwoWay}"
+              HorizontalAlignment="Stretch"
+              SelectionChanged="StatusPicker_SelectionChanged" />
+				<TextBlock Text="{x:Bind FormatDate('Started:', Item.StartedAt), Mode=OneWay}" />
+				<TextBlock Text="{x:Bind FormatDate('Completed:', Item.CompletedAt), Mode=OneWay}" />
+			</StackPanel>
+		</StackPanel>
+
+		<TextBlock Text="{x:Bind FormatDate('Created:', Item.CreatedAt)}" Grid.Row="5"
+           Margin="10,0"/>
+
+	</Grid>
+</Page>

@@ -1,9 +1,11 @@
-﻿<linker>
-  <assembly fullname="UnoSliderDemo.Wasm" />
-  <assembly fullname="Uno.UI" />
+<linker>
+	<assembly fullname="UnoSliderDemo" />
+	<assembly fullname="UnoSliderDemo.Wasm" />
 
+	<!--
+  Uncomment this section when using JSON.NET
   <assembly fullname="System.Core">
-	<!-- This is required by JSon.NET and any expression.Compile caller -->
-	<type fullname="System.Linq.Expressions*" />
+	  <type fullname="System.Linq.Expressions*" />
   </assembly>
+   -->
 </linker>

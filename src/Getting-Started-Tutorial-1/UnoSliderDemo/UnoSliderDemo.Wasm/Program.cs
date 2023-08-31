@@ -1,15 +1,12 @@
-﻿using System;
-using Windows.UI.Xaml;
-
 namespace UnoSliderDemo.Wasm
 {
 	public class Program
 	{
-		private static App _app;
+		private static App? _app;
 
-		static int Main(string[] args)
+		public static int Main(string[] args)
 		{
-			Windows.UI.Xaml.Application.Start(_ => _app = new App());
+			Microsoft.UI.Xaml.Application.Start(_ => _app = new AppHead());
 
 			return 0;
 		}
