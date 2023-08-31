@@ -6,7 +6,6 @@ jobs:
     AndroidNdkDirectory: C:\Microsoft\AndroidNDK64\android-ndk-r16b
     NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
     NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
-    DotNetVersion: '7.0.302'
     UnoCheck_Version: '1.11.2'
     UnoCheck_Manifest: 'https://raw.githubusercontent.com/unoplatform/uno.check/d7ae6dbcf0400e25833df72ed30e50dbb6efa6f5/manifests/uno.ui.manifest.json'
 
@@ -29,8 +28,8 @@ jobs:
       resultFile: '$(Build.ArtifactStagingDirectory)/update_result.json'
 
   - powershell: |
-      & dotnet tool update --global uno.check --version ${{ parameters.UnoCheck_Version }} --add-source https://api.nuget.org/v3/index.json
-      & uno-check -v --ci --non-interactive --fix --skip androidsdk --skip androidemulator --skip xcode --skip gtk3 --skip vswin --skip vsmac --manifest ${{ parameters.UnoCheck_Manifest }}
+      & dotnet tool update --global uno.check --version $(UnoCheck_Version) --add-source https://api.nuget.org/v3/index.json
+      & uno-check -v --ci --non-interactive --fix --skip androidsdk --skip androidemulator --skip xcode --skip gtk3 --skip vswin --skip vsmac --manifest $(UnoCheck_Manifest)
     displayName: Install .NET Workloads
     errorActionPreference: continue
     ignoreLASTEXITCODE: true
