@@ -11,16 +11,16 @@
     <PackageVersion Include="Uno.Extensions.Logging.OSLog" Version="1.6.0" />
     <PackageVersion Include="Uno.Extensions.Logging.WebAssembly.Console" Version="1.6.0" />
     <PackageVersion Include="Uno.Resizetizer" Version="1.1.2" />
-    <PackageVersion Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.9.45" />
+    <PackageVersion Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.10.13" />
     <PackageVersion Include="Uno.UniversalImageLoader" Version="1.9.36" />
     <PackageVersion Include="Uno.Wasm.Bootstrap" Version="7.0.27" />
     <PackageVersion Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.27" />
     <PackageVersion Include="Uno.Wasm.Bootstrap.Server" Version="7.0.27" />
-    <PackageVersion Include="Uno.WinUI" Version="4.9.45" />
-    <PackageVersion Include="Uno.WinUI.Lottie" Version="4.9.45" />
-    <PackageVersion Include="Uno.WinUI.RemoteControl" Version="4.9.45" />
-    <PackageVersion Include="Uno.WinUI.Skia.Gtk" Version="4.9.45" />
-    <PackageVersion Include="Uno.WinUI.WebAssembly" Version="4.9.45" />
+    <PackageVersion Include="Uno.WinUI" Version="4.10.13" />
+    <PackageVersion Include="Uno.WinUI.Lottie" Version="4.10.13" />
+    <PackageVersion Include="Uno.WinUI.RemoteControl" Version="4.10.13" />
+    <PackageVersion Include="Uno.WinUI.Skia.Gtk" Version="4.10.13" />
+    <PackageVersion Include="Uno.WinUI.WebAssembly" Version="4.10.13" />
     <PackageVersion Include="Xamarin.Google.Android.Material" Version="1.9.0.2" />
   </ItemGroup>
 </Project>
