@@ -56,4 +56,12 @@
     <UnoImage Include="Assets\**\*.svg" />
     <UpToDateCheckInput Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Assets\logo.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\logo.svg" />
+  </ItemGroup>
 </Project>

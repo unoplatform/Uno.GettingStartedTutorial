@@ -1,13 +1,26 @@
-﻿<Page x:Class="Counter.MainPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:Counter"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-  <StackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center">
-    <TextBlock AutomationProperties.AutomationId="HelloTextBlock"
-          Text="Hello Uno Platform"
-          HorizontalAlignment="Center" />
-  </StackPanel>
+﻿<Page
+	x:Class="Counter.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:Counter"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		<Image
+			Width="150"
+			Height="150"
+			Source="Assets/logo.png" />
+		<TextBox
+			Margin="12"
+			HorizontalTextAlignment="Center"
+			PlaceholderText="Step Size"
+			Text="{Binding StepSize, Mode=TwoWay}" />
+		<TextBlock Margin="12" HorizontalTextAlignment="Center">
+			<Run Text="Counter: " /><Run Text="{Binding CounterValue}" />
+		</TextBlock>
+		<Button
+			Margin="12"
+			HorizontalAlignment="Center"
+			Command="{Binding IncrementCommand}"
+			Content="Click me to increment Counter by Step Size" />
+	</StackPanel>
 </Page>
