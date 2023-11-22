@@ -4,19 +4,25 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="using:Counter"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.DataContext>
+		<local:MainViewModel />
+	</Page.DataContext>
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 		<Image
 			Width="150"
 			Height="150"
 			Source="Assets/logo.png" />
+
 		<TextBox
 			Margin="12"
 			HorizontalTextAlignment="Center"
 			PlaceholderText="Step Size"
 			Text="{Binding StepSize, Mode=TwoWay}" />
+
 		<TextBlock Margin="12" HorizontalTextAlignment="Center">
 			<Run Text="Counter: " /><Run Text="{Binding CounterValue}" />
 		</TextBlock>
+
 		<Button
 			Margin="12"
 			HorizontalAlignment="Center"

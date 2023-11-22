@@ -1,6 +1,6 @@
 namespace Counter;
 
-internal partial class MainViewModel:ObservableObject
+internal partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
     private int _stepSize = 1;
@@ -10,7 +10,5 @@ internal partial class MainViewModel:ObservableObject
 
     [RelayCommand]
     private void Increment()
-    {
-        CounterValue += StepSize; 
-    }
+        => CounterValue += StepSize;
 }

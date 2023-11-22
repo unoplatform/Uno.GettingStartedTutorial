@@ -1,22 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace Counter;
 
-namespace Counter
+public partial record MainModel
 {
-    public partial record MainModel
-    {
-        public IState<int> StepSize => State.Value(this, () => 1);
+    public IState<int> StepSize => State.Value(this, () => 1);
 
-        public IState<int> CounterValue => State.Value(this, () => 0);
+    public IState<int> CounterValue => State.Value(this, () => 0);
 
-        public async ValueTask IncrementCommand(CancellationToken ct = default)
-        {
-            var step = await StepSize.Value(ct);
-
-            await CounterValue.Update(c => c + step, ct);
-        }
-    }
+    public ValueTask IncrementCommand(int stepSize, CancellationToken ct)
+            => CounterValue.Update(c => c + stepSize, ct);
 }
