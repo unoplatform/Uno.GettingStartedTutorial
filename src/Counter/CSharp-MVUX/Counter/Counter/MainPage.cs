@@ -12,35 +12,29 @@ public sealed partial class MainPage : Page
                     .Content(new StackPanel()
                         .VerticalAlignment(VerticalAlignment.Center)
                         .Children(
-                            new Image()
-                                .Width(150)
-                                .Height(150)
-                                .CenterAndSpace()
-                                .Source("ms-appx:///Counter/Assets/logo.png"),
-                            new TextBox()
-                                .CenterAndSpace()
-                                //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
-                                .PlaceholderText("Step Size")
-                                .Text(x => x.Bind(() => vm.StepSize).Mode(BindingMode.TwoWay)),
-                            new TextBlock()
-                                .CenterAndSpace()
-                                .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)
-                                .Text(() => vm.CounterValue, txt => $"Counter: {txt}"),
-                            new Button()
-                                .CenterAndSpace()
-                                .Command(() => vm.IncrementCommand)
-                                .Content("Click me to increment Counter by Step Size")
+                            CenterAndSpace(
+                                new Image()
+                                    .Width(150)
+                                    .Height(150)
+                                    .Source("ms-appx:///Counter/Assets/logo.png"),
+                                new TextBox()
+                                    //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
+                                    .PlaceholderText("Step Size")
+                                    .Text(x => x.Bind(() => vm.StepSize).Mode(BindingMode.TwoWay)),
+                                new TextBlock()
+                                    .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)
+                                    .Text(() => vm.CounterValue, txt => $"Counter: {txt}"),
+                                new Button()
+                                    .Command(() => vm.IncrementCommand)
+                                    .Content("Click me to increment Counter by Step Size")
+                            )
                         )
                     )
         );
     }
-}
 
-public static class MainPageHelpers
-{
-    public static T CenterAndSpace<T>(this T element) where T : FrameworkElement
-        => element
+    public static UIElement[] CenterAndSpace(params FrameworkElement[] elements)
+        => elements.Select(element => element
             .HorizontalAlignment(HorizontalAlignment.Center)
-            .Margin(12);
-    
+            .Margin(12)).ToArray();
 }
