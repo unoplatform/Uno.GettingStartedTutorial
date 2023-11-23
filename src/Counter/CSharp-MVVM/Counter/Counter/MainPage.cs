@@ -21,7 +21,7 @@ public sealed partial class MainPage : Page
                                 .CenterAndSpace()
                                 //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
                                 .PlaceholderText("Step Size")
-                                .Text(x => x.Bind(() => vm.StepSize).Mode(BindingMode.TwoWay)),
+                                .Text(x => x.Bind(() => vm.StepSize).TwoWay()),
                             new TextBlock()
                                 .CenterAndSpace()
                                 .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)

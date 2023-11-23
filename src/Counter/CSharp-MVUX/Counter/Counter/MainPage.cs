@@ -20,7 +20,7 @@ public sealed partial class MainPage : Page
                                 new TextBox()
                                     //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
                                     .PlaceholderText("Step Size")
-                                    .Text(x => x.Bind(() => vm.StepSize).Mode(BindingMode.TwoWay)),
+                                    .Text(x => x.Bind(() => vm.StepSize).TwoWay()),
                                 new TextBlock()
                                     .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)
                                     .Text(() => vm.CounterValue, txt => $"Counter: {txt}"),
