@@ -5,30 +5,42 @@ public sealed partial class MainPage : Page
     public MainPage()
     {
         this
-            .DataContext(new BindableMainModel(), (page, vm) => page
-            .Background(ThemeResource.Get<Brush>("ApplicationPageBackgroundThemeBrush"))
-            .Content(new StackPanel()
-            .VerticalAlignment(VerticalAlignment.Center)
-            .HorizontalAlignment(HorizontalAlignment.Center)
-            .Children(
-                new Image()
-                    .Width(150)
-                    .Height(150)
-                    .Source("ms-appx:///Counter/Assets/logo.png"),
-                new TextBox()
-                    .Margin(12)
-                    //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
-                    .PlaceholderText("Step Size")
-                    .Text(x => x.Bind(() => vm.StepSize).Mode(BindingMode.TwoWay)),
-                new TextBlock()
-                    .Margin(12)
-                    .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)
-                    .Text(() => vm.CounterValue, txt => $"Counter: {txt}"),
-                new Button()
-                    .Margin(12)
-                    .HorizontalAlignment(HorizontalAlignment.Center)
-                    .Command(() => vm.IncrementCommand)
-                    .Content("Click me to increment Counter by Step Size")
-            )));
+            .DataContext(
+                new BindableMainModel(), 
+                (page, vm) => page
+                    .Background(Theme.Brushes.Background.Default)
+                    .Content(new StackPanel()
+                        .VerticalAlignment(VerticalAlignment.Center)
+                        .Children(
+                            new Image()
+                                .Width(150)
+                                .Height(150)
+                                .CenterAndSpace()
+                                .Source("ms-appx:///Counter/Assets/logo.png"),
+                            new TextBox()
+                                .CenterAndSpace()
+                                //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
+                                .PlaceholderText("Step Size")
+                                .Text(x => x.Bind(() => vm.StepSize).Mode(BindingMode.TwoWay)),
+                            new TextBlock()
+                                .CenterAndSpace()
+                                .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)
+                                .Text(() => vm.CounterValue, txt => $"Counter: {txt}"),
+                            new Button()
+                                .CenterAndSpace()
+                                .Command(() => vm.IncrementCommand)
+                                .Content("Click me to increment Counter by Step Size")
+                        )
+                    )
+        );
     }
+}
+
+public static class MainPageHelpers
+{
+    public static T CenterAndSpace<T>(this T element) where T : FrameworkElement
+        => element
+            .HorizontalAlignment(HorizontalAlignment.Center)
+            .Margin(12);
+    
 }
