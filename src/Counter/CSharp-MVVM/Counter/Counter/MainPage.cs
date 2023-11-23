@@ -21,11 +21,11 @@ public sealed partial class MainPage : Page
                                 .CenterAndSpace()
                                 //.HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center),
                                 .PlaceholderText("Step Size")
-                                .Text(x => x.Bind(() => vm.StepSize).TwoWay()),
+                                .Text(x => x.Bind(() => vm.Step).TwoWay()),
                             new TextBlock()
                                 .CenterAndSpace()
                                 .HorizontalTextAlignment(Microsoft.UI.Xaml.TextAlignment.Center)
-                                .Text(() => vm.CounterValue, txt => $"Counter: {txt}"),
+                                .Text(() => vm.Count, txt => $"Counter: {txt}"),
                             new Button()
                                 .CenterAndSpace()
                                 .Command(() => vm.IncrementCommand)

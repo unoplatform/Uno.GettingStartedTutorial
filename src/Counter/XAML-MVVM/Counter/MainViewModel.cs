@@ -3,12 +3,12 @@ namespace Counter;
 internal partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
-    private int _stepSize = 1;
+    private int _count = 0;
 
     [ObservableProperty]
-    private int _counterValue = 0;
+    private int _step = 1;
 
     [RelayCommand]
     private void Increment()
-        => CounterValue += StepSize;
+        => Count += Step;
 }
