@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
 
   <!--
     If working on a single target framework, copy solution-config.props.sample to solution-config.props
@@ -34,8 +34,8 @@
     <IsMacCatalyst>false</IsMacCatalyst>
     <IsWinAppSdk>false</IsWinAppSdk>
 
-    <!-- Required for Hot Reload (See https://github.com/unoplatform/uno.templates/issues/376) -->
-    <GenerateAssemblyInfo Condition="'$(Configuration)'=='Debug'">false</GenerateAssemblyInfo>
+    <!-- Required for Hot Reload (See https://github.com/dotnet/sdk/issues/36666) -->
+    <IncludeSourceRevisionInInformationalVersion Condition="'$(Configuration)'=='Debug'">false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <Choose>
