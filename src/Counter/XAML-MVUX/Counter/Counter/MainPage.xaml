@@ -19,12 +19,13 @@
 			Margin="12"
 			HorizontalAlignment="Center"
 			PlaceholderText="Step Size"
-			Text="{Binding Step, Mode=TwoWay}" />
+			Text="{Binding Step, Mode=TwoWay}"
+			TextAlignment="Center" />
 
 		<TextBlock
 			Margin="12"
 			HorizontalAlignment="Center"
-			HorizontalTextAlignment="Center">
+			TextAlignment="Center">
 			<Run Text="Counter: " /><Run Text="{Binding Count}" />
 		</TextBlock>
 
@@ -32,6 +33,6 @@
 			Margin="12"
 			HorizontalAlignment="Center"
 			Command="{Binding IncrementCommand}"
-			Content="Click me to increment Counter by Step Size" />
+			Content="Increment Counter by Step Size" />
 	</StackPanel>
 </Page>
