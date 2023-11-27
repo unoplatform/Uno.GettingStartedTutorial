@@ -1,11 +1,6 @@
 jobs:
 - job: VS_Latest
   variables:
-    ANDROID_NDK_HOME: C:\Microsoft\AndroidNDK64\android-ndk-r16b
-    ANDROID_NDK_PATH: C:\Microsoft\AndroidNDK64\android-ndk-r16b
-    AndroidNdkDirectory: C:\Microsoft\AndroidNDK64\android-ndk-r16b
-    NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
-    NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
     UnoCheck_Version: '1.17.0'
     UnoCheck_Manifest: 'https://raw.githubusercontent.com/unoplatform/uno.check/3b250f49b719d1cf5ab205f997c3959b5e9fed1d/manifests/uno.ui.manifest.json'
 
@@ -44,7 +39,6 @@ jobs:
       msbuildArguments: /r /v:m /p:Configuration=Release /p:AndroidAddKeepAlives=false /p:WasmShellMonoRuntimeExecutionMode=Interpreter /p:PublishTrimmed=false /p:WasmShellILLinkerEnabled=false /p:EnableCoreMrtTooling=false /p:RunAOTCompilation=false /p:MtouchUseLlvm=false /bl:$(build.artifactstagingdirectory)/msbuild.binlog
       clean: false
       maximumCpuCount: true
-      restoreNugetPackages: false
       logProjectEvents: false
       createLogFile: false
 
