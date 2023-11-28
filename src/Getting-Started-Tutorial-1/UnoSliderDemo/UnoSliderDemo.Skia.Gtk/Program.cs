@@ -1,10 +1,9 @@
 using GLib;
-using System;
-using Uno.UI.Runtime.Skia;
+using Uno.UI.Runtime.Skia.Gtk;
 
 namespace UnoSliderDemo.Skia.Gtk
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
